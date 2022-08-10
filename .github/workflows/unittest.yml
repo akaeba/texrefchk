@@ -28,8 +28,8 @@ jobs:
     strategy:
       matrix:
         image: ['ubuntu:latest', '']
-  steps:
-    - uses: actions/checkout@v3
-    - name: OS Version
-      run: | 
-        cat /etc/os-release
+    steps:
+      - uses: actions/checkout@v3
+      - name: OS Version
+        run: | 
+          cat /etc/os-release
