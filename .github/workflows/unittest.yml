@@ -22,14 +22,14 @@ on:
     paths-ignore:
       - 'doc/**'
       - 'README.md'
-  jobs:    
-    test:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          image: ['ubuntu:latest', '']
-    steps:
-      - uses: actions/checkout@v3
-      - name: OS Version
-        run: | 
-          cat /etc/os-release
+jobs:    
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: ['ubuntu:latest', '']
+  steps:
+    - uses: actions/checkout@v3
+    - name: OS Version
+      run: | 
+        cat /etc/os-release
