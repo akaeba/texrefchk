@@ -24,15 +24,10 @@ on:
       - 'README.md'
 jobs:    
   test:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-      
-    include:
-      - os: ubuntu:latest
-      - os: ubuntu:16.04
-      - os: ubuntu:18.04
-      - os: ubuntu:20.04
+        os: ['ubuntu:16.04', 'ubuntu:18.04', 'ubuntu:18.04', 'ubuntu:20.04', 'ubuntu:latest']
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: OS Version
