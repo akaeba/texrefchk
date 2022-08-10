@@ -1,0 +1,35 @@
+# ************************************************************************
+#  @author:     Andreas Kaeberlein
+#  @copyright:  Copyright 2022
+#  @credits:    AKAE
+#
+#  @license:    GPLv3
+#  @maintainer: Andreas Kaeberlein
+#  @email:      andreas.kaeberlein@web.de
+#
+#  @file:       unittest.yml
+#  @date:       2022-08-10
+#
+#  @brief:      runs unit test
+#
+# ************************************************************************
+
+
+name: Unittest
+
+on:
+  push:
+    paths-ignore:
+      - 'doc/**'
+      - 'README.md'
+  jobs:    
+    test:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          image: ['ubuntu:latest', '']
+    steps:
+      - uses: actions/checkout@v3
+      - name: OS Version
+        run: | 
+          cat /etc/os-release
