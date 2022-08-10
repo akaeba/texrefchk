@@ -210,7 +210,7 @@ for key in ${SCP_TEX_REF_KEY}; do
         # https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
         refs=($(cat ${texdir}/${file} | grep -o -E "(^|\\\)${key}{[^][]*}" | sed 's/^[^:]*{//g' | sed 's/}.*//')); # label{xxxx} -> xxxx} -> xxxx
         for ref in "${refs[@]}"; do
-            # count labels
+            # count references
             refcnt=$((refcnt+1))
             # add to ref file
             echo "${ref} % ${file}" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_FILE}"
@@ -277,8 +277,17 @@ fi
 # Normal End?
 #
 if [ 1 -eq ${SCP_ERO_END} ]; then
+    echo "[ INFO ]    Summary:"
+    echo "              Non Unique Labels : ${#nonUniqLabels[@]}"
+    echo "              Broken References : ${#nonRefs[@]}"
     echo "[ FAIL ]    texrefchk ended with errors :-("
     exit 1
 fi
+echo "[ INFO ]    Summary:"
+echo "              TeX files  : ${#texFiles[@]}"
+echo "              Labels     : ${labelcnt}"
+echo "              References : ${refcnt}"
+echo "            analyzed with no broken references and non unique labels"
+echo "[ INFO ]    texrefchk ended normally :-)"
 exit 0
 # ----------------------------------------------------------------------
