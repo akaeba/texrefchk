@@ -22,7 +22,7 @@ on:
     paths-ignore:
       - 'doc/**'
       - 'README.md'
-jobs:    
+jobs:
   test:
     strategy:
       matrix:
@@ -31,5 +31,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: OS Version
-        run: | 
+        run: |
           cat /etc/os-release
+      - name: texrefchk
+        run: |
+          # 01_pass
+          ret=$(./texrefchk.sh --texdir=./test/01_pass)
+          if [ 0 -eq $? ]; then echo "[ PASS ]   test: 01_pass"; else [ FAIL ]   test: 01_pass; echo $ret; exit 1; fi;
