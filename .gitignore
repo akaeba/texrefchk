@@ -1,0 +1,13 @@
+test/**/*.pdf
+test/**/*.aux
+test/**/*.lof
+test/**/*.log
+test/**/*.lot
+test/**/*.fls
+test/**/*.out
+test/**/*.toc
+test/**/*.fmt
+test/**/*.fot
+test/**/*.cb
+test/**/*.cb2
+test/**/.*.lb
