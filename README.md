@@ -33,10 +33,25 @@ TeX Label and reference checker. Searches for non unique TeX Labels and broken r
 
 ### Run
 
+#### [Pass](./test/01_pass/mwe.tex) example
+
+The listing below shows the CLI call and the belonging results for the [Pass](./test/01_pass/mwe.tex) example:
 ```bash
-./texrefchk --texdir=./test/01_pass
+./texrefchk.sh --texdir=./test/01_pass
 ```
 
-
-
-
+```bash
+[ INFO ]    texrefchk started
+              Version : v0.1.0
+              Script  : /home/ubuntu/Desktop/texrefchk
+              Tex-Dir : /home/ubuntu/Desktop/texrefchk/./test/01_pass
+[ INFO ]    Found Tex Files 3
+[ INFO ]    Found Labels 8
+[ INFO ]    Found References 8
+[ INFO ]    Summary:
+              TeX files  : 3
+              Labels     : 8
+              References : 8
+            analyzed with no broken references and non unique labels
+[ INFO ]    texrefchk ended normally :-)
+```
