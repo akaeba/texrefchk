@@ -29,7 +29,7 @@ SCP_PATH_ABS=$(dirname "$(readlink -f "$0")")       # get scripts absolute path
 SCP_PATH_WORK_ABS=$(pwd)                            # absolute path to work dir
 SCP_TEX_LABEL_FILE="texrefchk.label"                # stores extracted labels from tex sources
 SCP_TEX_REF_FILE="texrefchk.ref"                    # stores extracted references from tex sources
-SCP_TEX_REF_KEY="autoref nameref ref"               # reference keys to search for
+SCP_TEX_REF_KEY="autoref{ nameref{ ref{ hyperref["  # reference keys to search for, backslash for tex command and closing bracket is automatically added
 SCP_TEX_LABEL_NOT_UNIQ="non_unique_labels.txt"      # file with non unique labels
 SCP_TEX_REF_NOT_DEF="non_defined_references.txt"    # non defined references
 SCP_ERO_END=0                                       # if set, abnormal end
@@ -205,10 +205,24 @@ touch "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_FILE}"
 # Iterate Over keys
 refcnt=0
 for key in ${SCP_TEX_REF_KEY}; do
+    # generate grep selector
+    bracket_open=${key: -1} # get last character from string
+    bracket_close=$(printf "\x$(printf %x $(($(printf '%d' "'${bracket_open}")+2)))");  # in ascii table is closing bracket to chars after opening bracket
+    key=${key:: -1}         # drop last character
+    # Debug
+    if [ ${arg_verbose} -eq 1 ]; then
+        echo "DEBUG: Selector: \\${key}${bracket_open} ${bracket_close}"
+    fi
+    # mask control sequence
+    if [ '[' == ${bracket_open} ]; then
+        bracket_open="\\${bracket_open}"
+        bracket_close="\\${bracket_close}"
+    fi;
+    # iterate over files
     for file in "${texFiles[@]}"; do
         # https://unix.stackexchange.com/questions/232657/delete-till-first-occurrence-of-colon-using-sed
         # https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
-        refs=($(cat ${texdir}/${file} | grep -o -E "(^|\\\)${key}{[^][]*}" | sed 's/^[^:]*{//g' | sed 's/}.*//')); # label{xxxx} -> xxxx} -> xxxx
+        refs=($(cat ${texdir}/${file} | grep -o -E "(^|\\\)${key}${bracket_open}[^][]*${bracket_close}" | sed "s/^[^:]*${bracket_open}//g" | sed "s/${bracket_close}.*//")); # label{xxxx} -> xxxx} -> xxxx
         for ref in "${refs[@]}"; do
             # count references
             refcnt=$((refcnt+1))
