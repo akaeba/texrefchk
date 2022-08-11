@@ -51,7 +51,7 @@ The listing below shows the CLI call and the belonging results for the [Pass](./
 [ INFO ]    Summary:
               TeX files  : 3
               Labels     : 8
-              References : 8
+              References : 10
             analyzed with no broken references and non unique labels
 [ INFO ]    texrefchk ended normally :-)
 ```
