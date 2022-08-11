@@ -15,7 +15,7 @@ TeX Label and reference checker. Searches for non unique TeX Labels and broken r
 ## Features
 
 * checks TeX sources for non unique labels, selector `\label{}` and `label=`
-* checks references for existing labels, selector `\autoref{}`, `\nameref{}`, `\ref{}`
+* checks references for existing labels, selector `\autoref{}`, `\nameref{}`, `\ref{}`, `\hyperref[]`
 * output of broken labels/references with tag and issued file
 * outputs errors in file _non_unique_labels.txt_ and _non_defined_references.txt_
 
