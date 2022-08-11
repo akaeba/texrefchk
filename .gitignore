@@ -1,3 +1,8 @@
+# texrefchk generates
+texrefchk.label
+texrefchk.ref
+
+# tex compiler results
 test/**/*.pdf
 test/**/*.aux
 test/**/*.lof
