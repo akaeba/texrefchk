@@ -1,6 +1,8 @@
 # texrefchk generates
 texrefchk.label
 texrefchk.ref
+non_defined_references.txt
+non_unique_labels.txt
 
 # tex compiler results
 test/**/*.pdf
