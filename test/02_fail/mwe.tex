@@ -1,0 +1,25 @@
+\documentclass[
+  fontsize=12pt,% changed because of the package info in the log file
+  DIV=14
+]{scrreprt}
+
+\usepackage[english]{babel}
+\usepackage[bookmarksopen,bookmarksopenlevel=0, bookmarksnumbered,%
+            hyperindex, plainpages=false, hypertexnames=false,%
+            hyperfootnotes=false]{hyperref}%
+\usepackage{bookmark}
+
+
+\begin{document}
+
+    \part[Main 1]{Main 1}\label{main1}
+        \chapter[Preface]{Preface}\label{main1:preface}
+            This documents is a demo dataset to demonstrate the usage of \href{https://github.com/akaeba/texrefchk}{texrefchk} with pass.
+
+        \chapter[Sub]{Sub}\label{main1:sub}
+            \input{./sub/sub1/sub1.tex}
+            \input{./sub/sub2/sub2.tex}
+
+    \part[Main 2]{Main 2}\label{main1}
+
+\end{document}

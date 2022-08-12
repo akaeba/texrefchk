@@ -1,0 +1,24 @@
+\section[Sub2]{Sub2}\label{main1:sub:sub2}
+
+The other figure is exemplary shown in \autoref{main1:sub:sub1}. The following listings tries the different reference types:
+\begin{itemize}
+    \item Figure \hyperref[fig:main1:sub:sub1]{Sub1}:
+        \begin{itemize}
+            \item \autoref{fig:main1:sub:sub1}
+            \item \nameref{fig:main1:sub:sub1}
+            \item \ref{fig:main1:sub:sub1}
+        \end{itemize}
+    \item Figure \hyperref[fig:main1:sub:sub2]{Sub2}:
+        \begin{itemize}
+            \item \autoref{fig:main1:sub:sub2}
+            \item \nameref{fig:main1:sub:sub2}
+            \item \ref{fig:main1:sub:sub3}
+        \end{itemize}
+\end{itemize}
+
+
+\begin{figure}[!h]
+    \caption[{Main1; Sub; Sub2}]{Example Figure Sub2}
+    \label{fig:main1:sub:sub2}
+\end{figure}
+
