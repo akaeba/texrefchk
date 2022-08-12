@@ -55,3 +55,31 @@ The listing below shows the CLI call and the belonging results for the [Pass](./
             analyzed with no broken references and non unique labels
 [ OKAY ]    texrefchk ended normally :-)
 ```
+
+
+#### [Fail](./test/02_fail/mwe.tex) example
+
+Below an example with erroneous labels and references:
+```bash
+./texrefchk.sh --texdir=./test/02_fail
+```
+
+```bash
+[ INFO ]    texrefchk started
+              Version : v0.1.0
+              Script  : /home/ubuntu/Desktop/texrefchk
+              Tex-Dir : /home/ubuntu/Desktop/texrefchk/./test/02_fail
+[ INFO ]    Found Tex Files 3
+[ INFO ]    Found Labels 8
+[ FAIL ]    Found 1 non unique labels
+              main1
+                mwe.tex
+[ INFO ]    Found References 10
+[ FAIL ]    Found 1 references without label
+              fig:main1:sub:sub3
+                sub/sub2/sub2.tex
+[ INFO ]    Summary:
+              Non Unique Labels : 1
+              Broken References : 1
+[ FAIL ]    texrefchk ended with errors :-(
+```
