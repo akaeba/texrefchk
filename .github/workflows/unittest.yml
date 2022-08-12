@@ -39,6 +39,6 @@ jobs:
           if [ 0 -eq $? ]; then echo "[ PASS ]   test: 01_pass"; else [ FAIL ]   test: 01_pass; echo $ret; exit 1; fi;
       - name: texrefchk (Fail)
         run: |
-          /bin/bash -c ' ret=$(./texrefchk.sh --texdir=./test/02_fail) \
+          /bin/bash -c ' ret=$(./texrefchk.sh --texdir=./test/02_fail); \
                          if [ 1 -eq $? ]; then echo "[ PASS ]   test: 02_fail"; else [ FAIL ]   test: 02_fail; echo $ret; exit 1; fi; \
                        '
