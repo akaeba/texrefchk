@@ -302,6 +302,6 @@ echo "              TeX files  : ${#texFiles[@]}"
 echo "              Labels     : ${labelcnt}"
 echo "              References : ${refcnt}"
 echo "            analyzed with no broken references and non unique labels"
-echo "[ INFO ]    texrefchk ended normally :-)"
+echo "[ OKAY ]    texrefchk ended normally :-)"
 exit 0
 # ----------------------------------------------------------------------

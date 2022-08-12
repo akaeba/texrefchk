@@ -15,7 +15,7 @@ TeX Label and reference checker. Searches for non unique TeX Labels and broken r
 ## Features
 
 * checks TeX sources for non unique labels, selector `\label{}` and `label=`
-* checks references for existing labels, selector `\autoref{}`, `\nameref{}`, `\ref{}`, `\hyperref[]`
+* checks references for existing labels, selector `\autoref{}`, `\nameref{}`, `\ref{}`, `\hyperref[]{}`
 * output of broken labels/references with tag and issued file
 * outputs errors in file _non_unique_labels.txt_ and _non_defined_references.txt_
 
@@ -47,11 +47,11 @@ The listing below shows the CLI call and the belonging results for the [Pass](./
               Tex-Dir : /home/ubuntu/Desktop/texrefchk/./test/01_pass
 [ INFO ]    Found Tex Files 3
 [ INFO ]    Found Labels 8
-[ INFO ]    Found References 8
+[ INFO ]    Found References 10
 [ INFO ]    Summary:
               TeX files  : 3
               Labels     : 8
               References : 10
             analyzed with no broken references and non unique labels
-[ INFO ]    texrefchk ended normally :-)
+[ OKAY ]    texrefchk ended normally :-)
 ```
