@@ -3,13 +3,39 @@
   DIV=14
 ]{scrreprt}
 
+% load packages
 \usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{scrhack}% 	avoid warning '\float@addtolists detected' from listings in combination with KOMA script
 \usepackage[bookmarksopen,bookmarksopenlevel=0, bookmarksnumbered,%
             hyperindex, plainpages=false, hypertexnames=false,%
             hyperfootnotes=false]{hyperref}%
 \usepackage{bookmark}
 
 
+%setup packages 'Listings'
+    % preset listings appearance
+\lstset{
+    float=tbph,% 		t: Top of the page; b: Bottom of the page; p: Page of floats; h: Here, if possible;
+    numbers=left,
+    breaklines=true,
+    frame=single,
+    numberbychapter=true,
+    captionpos=b,
+    basicstyle=\scriptsize\ttfamily,
+    aboveskip=1em,
+    belowskip=1em,
+    xleftmargin=2em,% 	adjust frame size to allow line numbering
+    xrightmargin=2em%   https://tex.stackexchange.com/questions/263032/why-is-listings-frame-width-a-little-larger-then-textwidth
+}
+    % WA to honor 'float' in lstset
+    %   https://tex.stackexchange.com/questions/128713/lstinputlisting-does-not-respect-the-lstset-float-option
+\makeatletter
+\let\lst@floatdefault\lst@float
+\makeatother
+
+
+% Start of Document
 \begin{document}
 
     \part[Main 1]{Main 1}\label{main1}

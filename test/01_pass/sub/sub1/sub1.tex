@@ -1,9 +1,14 @@
 \section[Sub1]{Sub1}\label{main1:sub:sub1}
 
-\nameref{main1:sub:sub2} shows a item list with different referencing.
+\nameref{main1:sub:sub2} shows a item list with different referencing. \autoref{lst:main1:sub:sub1} shows an example call to start the TeX reference checker.
+
 
 \begin{figure}[!h]
     \caption[{Main1; Sub; Sub1}]{Example Figure Sub1}
     \label{fig:main1:sub:sub1}
 \end{figure}
 
+
+\begin{lstlisting}[language=bash,caption={Start texrefchk}, label=lst:main1:sub:sub1]
+./texrefchk.sh --texdir=./test/01_pass
+\end{lstlisting}
