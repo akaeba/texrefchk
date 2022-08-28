@@ -1,4 +1,4 @@
-[![Unittest](https://github.com/akaeba/texrefchk/workflows/Unittest/badge.svg)](https://github.com/akaeba/texrefchk/actions)
+[![Test](https://github.com/akaeba/texrefchk/workflows/Test/badge.svg)](https://github.com/akaeba/texrefchk/actions)
 
 # [texrefchk](./texrefchk.sh)
 TeX Label and reference checker. Searches for non unique TeX Labels and broken references.
