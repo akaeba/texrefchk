@@ -1,0 +1,37 @@
+# ************************************************************************
+#  @author:     Andreas Kaeberlein
+#  @copyright:  Copyright 2022
+#  @credits:    AKAE
+#
+#  @license:    GPLv3
+#  @maintainer: Andreas Kaeberlein
+#  @email:      andreas.kaeberlein@web.de
+#
+#  @file:       pdftex.yml
+#  @date:       2022-08-10
+#
+#  @see:        https://github.com/xu-cheng/latex-action
+#
+#  @brief:      runs unit test
+#
+# ************************************************************************
+
+
+name: tex2pdf
+
+on:
+  push:
+    paths-ignore:
+      - 'doc/**'
+      - 'README.md'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile Pass Example
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: mwe.tex
+          working_directory: ./test/01_pass
