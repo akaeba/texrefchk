@@ -28,6 +28,7 @@ SCP_VERSION="0.1.0"                                 # Version
 SCP_PATH_ABS=$(dirname "$(readlink -f "$0")")       # get scripts absolute path
 SCP_PATH_WORK_ABS=$(pwd)                            # absolute path to work dir
 SCP_TEX_LABEL_FILE="texrefchk.label"                # stores extracted labels from tex sources
+SCP_TEX_LABEL_KEY="label{ label="                   # label keys to search for, backslash for tex command and closing bracket is automatically added
 SCP_TEX_REF_FILE="texrefchk.ref"                    # stores extracted references from tex sources
 SCP_TEX_REF_KEY="autoref{ nameref{ ref{ hyperref["  # reference keys to search for, backslash for tex command and closing bracket is automatically added
 SCP_TEX_LABEL_NOT_UNIQ="non_unique_labels.txt"      # file with non unique labels
@@ -42,6 +43,9 @@ SCP_ERO_END=0                                       # if set, abnormal end
 #   Positional Arguments:
 #     $1: file
 #     $2: key
+#   References:
+#     https://unix.stackexchange.com/questions/232657/delete-till-first-occurrence-of-colon-using-sed
+#     https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
 texKeyExtract(){
     # local variables
     local tex;  # buffer of tex file
@@ -176,35 +180,22 @@ if [ -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_FILE}" ]; then
     rm -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_FILE}"
 fi
 touch "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_FILE}"
-# Get: \label{xxxxx}
+# Iterate Over keys
 labelcnt=0
 for file in "${texFiles[@]}"; do
-    # https://unix.stackexchange.com/questions/232657/delete-till-first-occurrence-of-colon-using-sed
-    # https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
-    labels=($(cat ${texdir}/${file} | grep -o -E "(^|\\\)label{[^][]*}" | sed 's/^[^:]*{//g' | sed 's/}.*//')); # label{xxxx} -> xxxx} -> xxxx
-    for label in "${labels[@]}"; do
-        # count labels
-        labelcnt=$((labelcnt+1))
-        # add to label file
-        echo "${label} % ${file}" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_FILE}"
-        # debug
-        if [ ${arg_verbose} -eq 1 ]; then
-            echo "DEBUG: file=${file} label=${label}"
-        fi
-    done
-done
-# Get: label=xxxxx
-for file in "${texFiles[@]}"; do
-    labels=($(cat ${texdir}/${file} | grep -o '\label=[^][]*' | sed 's/^.*=//' | sed 's/,\].*//')); # label=xxxx -> xxxx
-    for label in "${labels[@]}"; do
-        # count labels
-        labelcnt=$((labelcnt+1))
-        # add to label file
-        echo "${label} % ${file}" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_FILE}"
-        # debug
-        if [ ${arg_verbose} -eq 1 ]; then
-            echo "DEBUG: file=${file} label=${label}"
-        fi
+    for key in ${SCP_TEX_LABEL_KEY}; do
+        # Acquire labels from file
+        labels=($(texKeyExtract "${texdir}/${file}" ${key}))
+        for label in "${labels[@]}"; do
+            # count labels
+            labelcnt=$((labelcnt+1))
+            # add to label file
+            echo "${label} % ${file}" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_FILE}"
+            # debug
+            if [ ${arg_verbose} -eq 1 ]; then
+                echo "DEBUG: file=${file} label=${label}"
+            fi
+        done
     done
 done
 echo "[ INFO ]    Found Labels ${labelcnt}"
@@ -250,6 +241,7 @@ fi
 # ----------------------------------------------------------------------
 
 
+
 # ----------------------------------------------------------------------
 # Extract references
 #
@@ -260,25 +252,10 @@ fi
 touch "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_FILE}"
 # Iterate Over keys
 refcnt=0
-for key in ${SCP_TEX_REF_KEY}; do
-    # generate grep selector
-    bracket_open=${key: -1} # get last character from string
-    bracket_close=$(printf "\x$(printf %x $(($(printf '%d' "'${bracket_open}")+2)))");  # in ascii table is closing bracket to chars after opening bracket
-    key=${key:: -1}         # drop last character
-    # Debug
-    if [ ${arg_verbose} -eq 1 ]; then
-        echo "DEBUG: Selector: \\${key}${bracket_open} ${bracket_close}"
-    fi
-    # mask control sequence
-    if [ '[' == ${bracket_open} ]; then
-        bracket_open="\\${bracket_open}"
-        bracket_close="\\${bracket_close}"
-    fi;
-    # iterate over files
-    for file in "${texFiles[@]}"; do
-        # https://unix.stackexchange.com/questions/232657/delete-till-first-occurrence-of-colon-using-sed
-        # https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
-        refs=($(cat ${texdir}/${file} | grep -o -E "(^|\\\)${key}${bracket_open}[^][]*${bracket_close}" | sed "s/^[^:]*${bracket_open}//g" | sed "s/${bracket_close}.*//")); # label{xxxx} -> xxxx} -> xxxx
+# iterate over files
+for file in "${texFiles[@]}"; do
+    for key in ${SCP_TEX_REF_KEY}; do
+        refs=($(texKeyExtract "${texdir}/${file}" ${key}))
         for ref in "${refs[@]}"; do
             # count references
             refcnt=$((refcnt+1))
