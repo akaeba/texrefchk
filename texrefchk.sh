@@ -38,6 +38,62 @@ SCP_ERO_END=0                                       # if set, abnormal end
 
 
 # ----------------------------------------------------------------------
+# Extracts keys from fiven tex files
+#   Positional Arguments:
+#     $1: file
+#     $2: key
+texKeyExtract(){
+    # local variables
+    local tex;  # buffer of tex file
+    local key;  # extract content surrounded by this
+    local bkto; # bracket open
+    local bktc; # bracket close
+    # preprocess file
+    IFS=;               # delete line break settings
+    tex=$(cat ${1});    # load file
+    tex=$(echo ${tex} | sed 's/\\%//g')     # remove all masked comments '\%'
+    tex=$(echo ${tex} | grep -o '^[^%]*');  # filter all comments out
+    # prepare key
+    key=${2}                # second command line argument
+    specifier=${key: -1};   # get last character
+    key=${key:: -1};        # drop last character
+    if [ '{' == ${specifier} ] || [ '[' == ${specifier} ]; then # process 'key' with '{' or '['
+        # build bracket ops
+        case ${specifier} in
+            '{')
+                bkto="{";
+                bktc="}";
+                ;;
+            '[')
+                bkto="\\["; # mask operator in SED
+                bktc="\\]";
+                ;;
+            *)
+                return;
+                ;;
+        esac;
+        # process tex file
+        tex=$(echo ${tex} | grep -o -E "(^|\\\)${key}${bkto}[^][]*${bktc}");    # tex       -> key{xxxx}
+        tex=$(echo ${tex} | sed "s/^[^:]*${bkto}//g");                          # key{xxxx} -> xxxx}
+        tex=$(echo ${tex} | sed "s/${bktc}.*//");                               # xxxx}     -> xxxx
+    elif [ '=' == ${specifier} ]; then
+        tex=$(echo ${tex} | grep -o '\label=[^][]*');   # tex                  -> key=xxxx, key2=value
+        tex=$(echo ${tex} | sed 's/,\].*//');           # key=xxxx, key2=value ->  key=xxxx
+        tex=$(echo ${tex} | sed 's/^.*=//');            # key=xxxx             -> xxxx
+    fi;
+
+    # trim trailing/leading blanks
+    tex=${tex##*( )};   # leading
+    tex=${tex%%*( )};   # trailing
+    # return values
+    unset IFS;
+    echo ${tex}
+}
+# ----------------------------------------------------------------------
+
+
+
+# ----------------------------------------------------------------------
 # User message
 #
 echo "[ INFO ]    texrefchk started"
