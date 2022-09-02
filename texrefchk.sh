@@ -88,9 +88,9 @@ texKeyExtract(){
         tex=$(echo ${tex} | sed 's/^.*=//');            # key=xxxx             -> xxxx
     fi;
     # post process
+    tex=$(echo ${tex} | sed 's/{//g' | sed 's/}//g');   # remove {} if stringified was in optional argument used
     tex=${tex##*( )};   # leading blank
     tex=${tex%%*( )};   # trailing blank
-    tex=$(echo ${tex} | sed 's/{//' | 's/}//'); # remove {} if stringified was in optional argument used
     # return values
     unset IFS;
     echo ${tex}
