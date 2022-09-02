@@ -48,10 +48,11 @@ SCP_ERO_END=0                                       # if set, abnormal end
 #     https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
 texKeyExtract(){
     # local variables
-    local tex;  # buffer of tex file
-    local key;  # extract content surrounded by this
-    local bkto; # bracket open
-    local bktc; # bracket close
+    local tex;          # buffer of tex file
+    local key;          # extract content surrounded by this
+    local bkto;         # bracket open
+    local bktc;         # bracket close
+    local specifier;    # argument directive
     # preprocess file
     IFS=;               # delete line break settings
     tex=$(cat ${1});    # load file
@@ -85,10 +86,10 @@ texKeyExtract(){
         tex=$(echo ${tex} | sed 's/,\].*//');           # key=xxxx, key2=value ->  key=xxxx
         tex=$(echo ${tex} | sed 's/^.*=//');            # key=xxxx             -> xxxx
     fi;
-
-    # trim trailing/leading blanks
-    tex=${tex##*( )};   # leading
-    tex=${tex%%*( )};   # trailing
+    # post process
+    tex=${tex##*( )};   # leading blank
+    tex=${tex%%*( )};   # trailing blank
+    tex=$(echo ${tex} | sed 's/\{//g' | sed 's/\}//g'); # remove {} if stringified was in optional argument used
     # return values
     unset IFS;
     echo ${tex}
