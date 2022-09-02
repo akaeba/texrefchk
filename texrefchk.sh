@@ -46,6 +46,7 @@ SCP_ERO_END=0                                       # if set, abnormal end
 #   References:
 #     https://unix.stackexchange.com/questions/232657/delete-till-first-occurrence-of-colon-using-sed
 #     https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
+#     https://www.theunixschool.com/2014/08/sed-examples-remove-delete-chars-from-line-file.html
 texKeyExtract(){
     # local variables
     local tex;          # buffer of tex file
@@ -89,7 +90,7 @@ texKeyExtract(){
     # post process
     tex=${tex##*( )};   # leading blank
     tex=${tex%%*( )};   # trailing blank
-    tex=$(echo ${tex} | sed 's/\{//g' | sed 's/\}//g'); # remove {} if stringified was in optional argument used
+    tex=$(echo ${tex} | sed 's/{//' | 's/}//'); # remove {} if stringified was in optional argument used
     # return values
     unset IFS;
     echo ${tex}
