@@ -208,13 +208,15 @@ echo "[ INFO ]    Found Labels ${labelcnt}"
 # ----------------------------------------------------------------------
 # Check for non uniqe labels
 #
+# load eros
 nonUniqLabels=($(cat "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_FILE}" | sed 's/ % .*//' | sort | uniq -d -i))
+# create ero file
+if [ -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}" ]; then
+    rm -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
+fi
+touch "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
+# check for ero file
 if [ ! -z ${nonUniqLabels} ]; then
-    # check for ero file
-    if [ -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}" ]; then
-        rm -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
-    fi
-    touch "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
     # mark for abnormal end
     SCP_ERO_END=$((SCP_ERO_END | 1))
     echo "[ FAIL ]    Found ${#nonUniqLabels[@]} non unique labels"
@@ -235,6 +237,10 @@ if [ ! -z ${nonUniqLabels} ]; then
         done
         echo "" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
     done
+else
+    echo "" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
+    echo "NO non unique labels FOUND :-)" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
+    echo "" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_LABEL_NOT_UNIQ}"
 fi
 if [ 1 -eq ${arg_stopOnEro} ] && [ 1 -eq ${SCP_ERO_END} ]; then
     echo "[ FAIL ]    texrefchk ended with errors :-("
@@ -287,15 +293,16 @@ for ref in "${uniqRefs[@]}"; do
         nonRefs+=(${ref})   # in case of no match add to undefined list
     fi
 done
+# create ero file
+if [ -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}" ]; then
+    rm -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
+fi
+touch "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
+# erros?
 if [ ! -z "${nonRefs}" ]; then
     # some flags
     SCP_ERO_END=$((SCP_ERO_END | 1))
     echo "[ FAIL ]    Found ${#nonRefs[@]} references without label"
-    # check for ero file
-    if [ -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}" ]; then
-        rm -f "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
-    fi
-    touch "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
     # get issued files
     for nonRef in "${nonRefs[@]}"; do
         # console
@@ -313,6 +320,10 @@ if [ ! -z "${nonRefs}" ]; then
         done
         echo "" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
     done
+else
+    echo "" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
+    echo "NO broken references FOUND :-)" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
+    echo "" >> "${SCP_PATH_WORK_ABS}/${SCP_TEX_REF_NOT_DEF}"
 fi;
 if [ 1 -eq ${arg_stopOnEro} ] && [ 1 -eq ${SCP_ERO_END} ]; then
     echo "[ FAIL ]    texrefchk ended with errors :-("
