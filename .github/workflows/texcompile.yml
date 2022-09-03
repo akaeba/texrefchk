@@ -30,13 +30,13 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
-      - name: Compile PASS example
+      - name: 01_pass_general
         uses: xu-cheng/latex-action@v2
         with:
           root_file: mwe.tex
-          working_directory: ./test/01_pass
-      - name: Compile FAIL example
+          working_directory: ./test/01_pass_general
+      - name: 10_fail_general
         uses: xu-cheng/latex-action@v2
         with:
           root_file: mwe.tex
-          working_directory: ./test/02_fail
+          working_directory: ./test/10_fail_general
