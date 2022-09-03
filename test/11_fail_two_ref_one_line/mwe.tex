@@ -1,0 +1,23 @@
+\documentclass[
+  fontsize=12pt,% changed because of the package info in the log file
+  DIV=14
+]{scrreprt}
+
+\usepackage[english]{babel}
+\usepackage[bookmarksopen,bookmarksopenlevel=0, bookmarksnumbered,%
+            hyperindex, plainpages=false, hypertexnames=false,%
+            hyperfootnotes=false]{hyperref}%
+\usepackage{bookmark}
+
+
+\begin{document}
+
+	\chapter{Main}\label{main}
+		This chapter has the number \ref{main} and references one working (\autoref{main:fig1}) and one broken reference \autoref{broken:ref:1}. It's to check if \href{https://github.com/akaeba/texrefchk}{texrefchk} can figure out this broken reference.
+	
+		\begin{figure}[!ht]
+			\caption{Figure 1}
+			\label{main:fig1}
+		\end{figure}
+
+\end{document}

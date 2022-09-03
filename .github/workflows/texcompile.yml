@@ -40,3 +40,8 @@ jobs:
         with:
           root_file: mwe.tex
           working_directory: ./test/10_fail_general
+      - name: 11_fail_two_ref_one_line
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: mwe.tex
+          working_directory: ./test/11_fail_two_ref_one_line

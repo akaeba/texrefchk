@@ -41,5 +41,10 @@ jobs:
       - name: texrefchk_fail_general
         run: |
           /bin/bash -c 'ret=$(./texrefchk.sh --texdir=./test/10_fail_general); \
-                        if [ 1 -eq $? ]; then echo "[ PASS ]   test: 10_fail_general"; else [ FAIL ]   test: 10_fail_general; echo "$ret"; exit 1; fi; \
+                        if [ 0 -ne $? ]; then echo "[ PASS ]   test: 10_fail_general"; else [ FAIL ]   test: 10_fail_general; echo "$ret"; exit 1; fi; \
+                       '
+      - name: texrefchk_fail_two_ref_one_line
+        run: |
+          /bin/bash -c 'ret=$(./texrefchk.sh --texdir=./test/11_fail_two_ref_one_line); \
+                        if [ 0 -ne $? ]; then echo "[ PASS ]   test: 11_fail_two_ref_one_line"; else [ FAIL ]   test: 11_fail_two_ref_one_line; echo "$ret"; exit 1; fi; \
                        '
