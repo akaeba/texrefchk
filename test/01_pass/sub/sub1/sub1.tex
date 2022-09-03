@@ -3,14 +3,40 @@
 \nameref{main1:sub:sub2} shows a item list with different referencing. \autoref{lst:main1:sub:sub1} shows an example call to start the TeX reference checker.
 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \caption[{Main1; Sub; Sub1}]{Example Figure Sub1 \%}\label{fig:main1:sub:sub1}  % use to check \% masking comment symbol in texrefcheck
 \end{figure}
 
 
-\begin{lstlisting}[language=bash,caption={Start texrefchk}, label=lst:main1:sub:sub1]
+The Listing below uses different tex conform label styles as list:
+\begin{itemize}
+    \item \ref{lst:main1:sub:sub1}
+    \item \ref{lst:main1:sub:sub1:t2}
+    \item \ref{lst:main1:sub:sub1:t3}
+\end{itemize}
+
+Here is more then one label checked in one line: \ref{lst:main1:sub:sub1}, \ref{lst:main1:sub:sub1:t4}.
+
+
+\begin{lstlisting}[language=bash,caption={Start texrefchk (Label Typ 1)}, label={lst:main1:sub:sub1}]
 ./texrefchk.sh --texdir=./test/01_pass
 \end{lstlisting}
+
+
+\begin{lstlisting}[language=bash, label = lst:main1:sub:sub1:t2, caption={Start texrefchk (Label Typ 2)}, ]
+./texrefchk.sh --texdir=./test/01_pass
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=bash, label=lst:main1:sub:sub1:t3, caption={Start texrefchk (Label Typ 3)}]
+./texrefchk.sh --texdir=./test/01_pass
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=bash, label= lst:main1:sub:sub1:t4, caption={Start texrefchk (Label Typ 4)}]
+./texrefchk.sh --texdir=./test/01_pass
+\end{lstlisting}
+
 
 
 % comment section below tries to check if comments in texrefcheck are honored
