@@ -35,11 +35,11 @@ jobs:
           cat /etc/os-release
       - name: texrefchk_pass_general
         run: |
-          /bin/bash -c ' ret=$(./texrefchk.sh --texdir=./test/01_pass_general); \
-                         if [ 0 -eq $? ]; then echo "[ PASS ]   test: 01_pass_general"; else [ FAIL ]   test: 01_pass_general; echo "$ret"; exit 1; fi; \
+          /bin/bash -c 'ret=$(./texrefchk.sh --texdir=./test/01_pass_general); \
+                        if [ 0 -eq $? ]; then echo "[ PASS ]   test: 01_pass_general"; else [ FAIL ]   test: 01_pass_general; echo "$ret"; exit 1; fi; \
                        '
       - name: texrefchk_fail_general
         run: |
-          /bin/bash -c ' ret=$(./texrefchk.sh --texdir=./test/10_fail_general); \
-                         if [ 1 -eq $? ]; then echo "[ PASS ]   test: 10_fail_general"; else [ FAIL ]   test: 10_fail_general; echo "$ret"; exit 1; fi; \
+          /bin/bash -c 'ret=$(./texrefchk.sh --texdir=./test/10_fail_general); \
+                        if [ 1 -eq $? ]; then echo "[ PASS ]   test: 10_fail_general"; else [ FAIL ]   test: 10_fail_general; echo "$ret"; exit 1; fi; \
                        '
