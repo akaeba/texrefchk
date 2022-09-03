@@ -1,4 +1,4 @@
-[![Test](https://github.com/akaeba/texrefchk/workflows/Test/badge.svg)](https://github.com/akaeba/texrefchk/actions) [![Tex2Pdf](https://github.com/akaeba/texrefchk/workflows/tex2pdf/badge.svg)](https://github.com/akaeba/texrefchk/actions)
+[![texrefchk](https://github.com/akaeba/texrefchk/workflows/texrefchk/badge.svg)](https://github.com/akaeba/texrefchk/actions) [![texcompile](https://github.com/akaeba/texrefchk/workflows/texcompile/badge.svg)](https://github.com/akaeba/texrefchk/actions)
 
 # [texrefchk](./texrefchk.sh)
 TeX Label and reference checker. Searches for non unique TeX Labels and broken references.
