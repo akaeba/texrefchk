@@ -83,7 +83,7 @@ texKeyExtract(){
         tex=$(echo ${tex} | sed "s/^[^:]*${bkto}//g");                          # key{xxxx} -> xxxx}
         tex=$(echo ${tex} | sed "s/${bktc}.*//");                               # xxxx}     -> xxxx
     elif [ '=' == ${specifier} ]; then
-        tex=$(echo ${tex} | grep -o '\label=[^][]*');   # tex                  -> key=xxxx, key2=value
+        tex=$(echo ${tex} | grep -o 'label *=[^][]*');  # tex                  -> key=xxxx, key2=value
         tex=$(echo ${tex} | sed 's/,\].*//');           # key=xxxx, key2=value ->  key=xxxx
         tex=$(echo ${tex} | sed 's/^.*=//');            # key=xxxx             -> xxxx
     fi;
