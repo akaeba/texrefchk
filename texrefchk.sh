@@ -47,6 +47,7 @@ SCP_ERO_END=0                                       # if set, abnormal end
 #     https://unix.stackexchange.com/questions/232657/delete-till-first-occurrence-of-colon-using-sed
 #     https://stackoverflow.com/questions/56688546/how-to-grep-an-exact-string-with-slash-in-it
 #     https://www.theunixschool.com/2014/08/sed-examples-remove-delete-chars-from-line-file.html
+#     https://serverfault.com/questions/398187/how-to-delete-all-characters-in-one-line-after-with-sed
 texKeyExtract(){
     # local variables
     local tex;          # buffer of tex file
@@ -83,8 +84,8 @@ texKeyExtract(){
         tex=$(echo ${tex} | sed "s/^[^:]*${bkto}//g");                          # key{xxxx} -> xxxx}
         tex=$(echo ${tex} | sed "s/${bktc}.*//");                               # xxxx}     -> xxxx
     elif [ '=' == ${specifier} ]; then
-        tex=$(echo ${tex} | grep -o 'label *=[^][]*');  # tex                  -> key=xxxx, key2=value
-        tex=$(echo ${tex} | sed 's/,\].*//');           # key=xxxx, key2=value ->  key=xxxx
+        tex=$(echo ${tex} | grep -o "${key} *=[^][]*"); # tex                  -> key=xxxx, key2=value
+        tex=$(echo ${tex} | sed 's/\(\,\|\]\).*//');    # key=xxxx, key2=value ->  key=xxxx
         tex=$(echo ${tex} | sed 's/^.*=//');            # key=xxxx             -> xxxx
     fi;
     # post process
